@@ -1,0 +1,22 @@
+<% if current_user != nil %>
+<h1>@<%=current_user.username %>'s Twitter Feed</h1>
+
+<% if current_user.avatar.url != nil %>
+
+<%= image_tag current_user.avatar.url, size: 50 %>
+<% end %>
+
+<div class="container-fluid">
+  <% @following_tweets.each do |tweet| %>
+    <div class="well">
+      <p>
+        <%= link_to tweet.user.name, show_user_path(id: tweet.user_id) %>
+        @<%= link_to tweet.user.username, show_user_path(id: tweet.user_id) %>
+        • <%= time_ago_in_words(tweet.created_at) %>
+      </p>
+      <p><%= tweet.message.html_safe %></p>
+    </div>
+  <% end %>
+</div>
+
+<% end %>
